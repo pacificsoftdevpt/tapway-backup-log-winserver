@@ -1,0 +1,9 @@
+c:\users\pscd\documents\visual studio 2010\Projects\BackupSaleFromLog\BackupSaleFromLog\bin\Debug\BackupSaleFromLog.exe
+c:\users\pscd\documents\visual studio 2010\Projects\BackupSaleFromLog\BackupSaleFromLog\bin\Debug\BackupSaleFromLog.pdb
+c:\users\pscd\documents\visual studio 2010\Projects\BackupSaleFromLog\BackupSaleFromLog\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\pscd\documents\visual studio 2010\Projects\BackupSaleFromLog\BackupSaleFromLog\obj\x86\Debug\BackupSaleFromLog.MainForm.resources
+c:\users\pscd\documents\visual studio 2010\Projects\BackupSaleFromLog\BackupSaleFromLog\obj\x86\Debug\BackupSaleFromLog.Properties.Resources.resources
+c:\users\pscd\documents\visual studio 2010\Projects\BackupSaleFromLog\BackupSaleFromLog\obj\x86\Debug\ResGen.read.1.tlog
+c:\users\pscd\documents\visual studio 2010\Projects\BackupSaleFromLog\BackupSaleFromLog\obj\x86\Debug\ResGen.write.1.tlog
+c:\users\pscd\documents\visual studio 2010\Projects\BackupSaleFromLog\BackupSaleFromLog\obj\x86\Debug\BackupSaleFromLog.exe
+c:\users\pscd\documents\visual studio 2010\Projects\BackupSaleFromLog\BackupSaleFromLog\obj\x86\Debug\BackupSaleFromLog.pdb
