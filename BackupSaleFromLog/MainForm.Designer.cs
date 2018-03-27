@@ -48,7 +48,9 @@
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelInfoTimeAutoSend = new System.Windows.Forms.Label();
+            this.dateTimePickerAutoSend = new System.Windows.Forms.DateTimePicker();
+            this.label5 = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -218,24 +220,48 @@
             this.label3.TabIndex = 14;
             this.label3.Text = "Log";
             // 
-            // label4
+            // labelInfoTimeAutoSend
             // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Blue;
-            this.label4.Location = new System.Drawing.Point(12, 368);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(261, 13);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "The program will auto send data every day at midnight";
+            this.labelInfoTimeAutoSend.AutoSize = true;
+            this.labelInfoTimeAutoSend.ForeColor = System.Drawing.Color.Blue;
+            this.labelInfoTimeAutoSend.Location = new System.Drawing.Point(9, 427);
+            this.labelInfoTimeAutoSend.Name = "labelInfoTimeAutoSend";
+            this.labelInfoTimeAutoSend.Size = new System.Drawing.Size(249, 13);
+            this.labelInfoTimeAutoSend.TabIndex = 15;
+            this.labelInfoTimeAutoSend.Text = "The program will auto send data every day at 00:00";
+            // 
+            // dateTimePickerAutoSend
+            // 
+            this.dateTimePickerAutoSend.CustomFormat = "HH:mm";
+            this.dateTimePickerAutoSend.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerAutoSend.Location = new System.Drawing.Point(93, 391);
+            this.dateTimePickerAutoSend.Name = "dateTimePickerAutoSend";
+            this.dateTimePickerAutoSend.ShowUpDown = true;
+            this.dateTimePickerAutoSend.Size = new System.Drawing.Size(121, 20);
+            this.dateTimePickerAutoSend.TabIndex = 16;
+            this.dateTimePickerAutoSend.Value = new System.DateTime(2018, 3, 27, 0, 0, 0, 0);
+            this.dateTimePickerAutoSend.ValueChanged += new System.EventHandler(this.dateTimePickerAutoSend_ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 397);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(70, 13);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "Auto Send At";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(395, 390);
-            this.Controls.Add(this.label4);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(395, 449);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.dateTimePickerAutoSend);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.richTextBoxLog);
+            this.Controls.Add(this.labelInfoTimeAutoSend);
             this.Controls.Add(this.progressBarLoading);
             this.Controls.Add(this.labelNotiEnterPath);
             this.Controls.Add(this.labelNotiEnterVenue);
@@ -248,7 +274,9 @@
             this.Controls.Add(this.buttonChangeVenueID);
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.buttonChangePath);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "BackupSaleFromLog";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -279,7 +307,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
         private System.Windows.Forms.RichTextBox richTextBoxLog;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelInfoTimeAutoSend;
+        private System.Windows.Forms.DateTimePicker dateTimePickerAutoSend;
+        private System.Windows.Forms.Label label5;
     }
 }
 

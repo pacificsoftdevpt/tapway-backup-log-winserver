@@ -16,11 +16,12 @@ namespace BackupSaleFromLog
 {
     public partial class MainForm : Form
     {
-        private const string defaultValueFileName = "defaultValue.txt";
+        private const string defaultValueFileName = "dataDefaultValue.txt";
         private const int maxLineLog = 500;
         private const string API_URL = "http://tapway.elasticbeanstalk.com/receiver/sales/receive?access_token=5d1d8c0be2c4476fb3b347d2b851d950";
 
         private bool enableClose = false;
+        private bool isDaily = false;
 
         public MainForm()
         {
@@ -32,13 +33,15 @@ namespace BackupSaleFromLog
         {
             if (!File.Exists(defaultValueFileName))
             {
-                File.WriteAllText(defaultValueFileName, @"C:\epos\History\,");
+                File.WriteAllText(defaultValueFileName, @"C:\epos\History\,,0:0");
             }
 
             string readText = File.ReadAllText(defaultValueFileName);
             string[] arrDefaultValue = readText.Split(',');
             txtPath.Text = arrDefaultValue[0];
             txtVenueID.Text = arrDefaultValue[1];
+            string[] timeAutoSend = arrDefaultValue[2].Split(':');
+            dateTimePickerAutoSend.Value = new DateTime(2018, 1, 1, int.Parse(timeAutoSend[0]), int.Parse(timeAutoSend[1]), 0);
 
             buttonSendData.Enabled = false;
             if (txtPath.Text == "")
@@ -132,7 +135,6 @@ namespace BackupSaleFromLog
                     }
                     else
                     {
-                        MessageBox.Show(responseText);
                         if (responseText.IndexOf("\"error\": \"invalid_venue\"") >= 0) 
                         {
                             appendRichTextBox("Invalid Venue", Color.Red);
@@ -152,11 +154,8 @@ namespace BackupSaleFromLog
 
             var startDate = dateTimePickerStart.Value;
             var endDate = dateTimePickerEnd.Value;
-            //if (isDaily)
-            //{
-              //  startDate = DateTime.Now.AddDays(-1); // run at midnight (new day) => make -1 day
-               // endDate = DateTime.Now.AddDays(-1);
-            //}
+
+            if (isDaily)            {                startDate = DateTime.Now.AddDays(-1); // run at midnight (new day) => make -1 day                endDate = DateTime.Now.AddDays(-1);            }
 
             foreach (DateTime day in Library.EachDay(startDate, endDate))
             {
@@ -249,8 +248,10 @@ namespace BackupSaleFromLog
         private void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             DateTime now = DateTime.Now;
-            if (now.Hour == 0 && now.Minute == 0 && now.Second == 0)
+            DateTime timeTimer = dateTimePickerAutoSend.Value;
+            if (now.Hour == timeTimer.Hour && now.Minute == timeTimer.Minute && now.Second == 0)
             {
+                isDaily = true;
                 Thread postLogDataThread = new Thread(new ThreadStart(readInfoFile));
                 postLogDataThread.Start();
             }
@@ -268,7 +269,7 @@ namespace BackupSaleFromLog
             {
                 txtPath.ReadOnly = true;
                 buttonChangePath.Text = "Path";
-                File.WriteAllText(defaultValueFileName, txtPath.Text + "," + txtVenueID.Text);
+                File.WriteAllText(defaultValueFileName, txtPath.Text + "," + txtVenueID.Text + "," + dateTimePickerAutoSend.Value.Hour + ":" + dateTimePickerAutoSend.Value.Minute);
             }
 
             setVisibleForNotiPath();
@@ -286,7 +287,7 @@ namespace BackupSaleFromLog
             {
                 txtVenueID.ReadOnly = true;
                 buttonChangeVenueID.Text = "Venue ID";
-                File.WriteAllText(defaultValueFileName, txtPath.Text + "," + txtVenueID.Text);
+                File.WriteAllText(defaultValueFileName, txtPath.Text + "," + txtVenueID.Text + "," + dateTimePickerAutoSend.Value.Hour + ":" + dateTimePickerAutoSend.Value.Minute);
             }
 
             setVisibleForNotiVenueID();
@@ -299,7 +300,7 @@ namespace BackupSaleFromLog
             progressBarLoading.MarqueeAnimationSpeed = 10;
             progressBarLoading.Visible = true;
             buttonSendData.Enabled = false;
-
+            isDaily = false;
             Thread postLogDataThread = new Thread(new ThreadStart(readInfoFile));
             postLogDataThread.Start();
         }
@@ -366,6 +367,12 @@ namespace BackupSaleFromLog
         {
             enableClose = true;
             Close();
+        }
+
+        private void dateTimePickerAutoSend_ValueChanged(object sender, EventArgs e)
+        {
+            labelInfoTimeAutoSend.Text = "The program will auto send data every day at " + Library.formatNumber10(dateTimePickerAutoSend.Value.Hour) + ':' + Library.formatNumber10(dateTimePickerAutoSend.Value.Minute);
+            File.WriteAllText(defaultValueFileName, txtPath.Text + "," + txtVenueID.Text + "," + dateTimePickerAutoSend.Value.Hour + ":" + dateTimePickerAutoSend.Value.Minute);
         }
     }
 }
