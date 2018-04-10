@@ -51,6 +51,9 @@
             this.labelInfoTimeAutoSend = new System.Windows.Forms.Label();
             this.dateTimePickerAutoSend = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
+            this.buttonHostAPI = new System.Windows.Forms.Button();
+            this.textBoxHostAPI = new System.Windows.Forms.TextBox();
+            this.labelErrorHostAPI = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -224,7 +227,7 @@
             // 
             this.labelInfoTimeAutoSend.AutoSize = true;
             this.labelInfoTimeAutoSend.ForeColor = System.Drawing.Color.Blue;
-            this.labelInfoTimeAutoSend.Location = new System.Drawing.Point(9, 427);
+            this.labelInfoTimeAutoSend.Location = new System.Drawing.Point(9, 465);
             this.labelInfoTimeAutoSend.Name = "labelInfoTimeAutoSend";
             this.labelInfoTimeAutoSend.Size = new System.Drawing.Size(249, 13);
             this.labelInfoTimeAutoSend.TabIndex = 15;
@@ -234,7 +237,7 @@
             // 
             this.dateTimePickerAutoSend.CustomFormat = "HH:mm";
             this.dateTimePickerAutoSend.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerAutoSend.Location = new System.Drawing.Point(93, 391);
+            this.dateTimePickerAutoSend.Location = new System.Drawing.Point(93, 434);
             this.dateTimePickerAutoSend.Name = "dateTimePickerAutoSend";
             this.dateTimePickerAutoSend.ShowUpDown = true;
             this.dateTimePickerAutoSend.Size = new System.Drawing.Size(121, 20);
@@ -245,25 +248,57 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 397);
+            this.label5.Location = new System.Drawing.Point(9, 440);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(70, 13);
             this.label5.TabIndex = 17;
             this.label5.Text = "Auto Send At";
+            // 
+            // buttonHostAPI
+            // 
+            this.buttonHostAPI.Location = new System.Drawing.Point(12, 372);
+            this.buttonHostAPI.Name = "buttonHostAPI";
+            this.buttonHostAPI.Size = new System.Drawing.Size(75, 23);
+            this.buttonHostAPI.TabIndex = 18;
+            this.buttonHostAPI.Text = "Host API";
+            this.buttonHostAPI.UseVisualStyleBackColor = true;
+            this.buttonHostAPI.Click += new System.EventHandler(this.buttonHostAPI_Click);
+            // 
+            // textBoxHostAPI
+            // 
+            this.textBoxHostAPI.Location = new System.Drawing.Point(93, 374);
+            this.textBoxHostAPI.Name = "textBoxHostAPI";
+            this.textBoxHostAPI.ReadOnly = true;
+            this.textBoxHostAPI.Size = new System.Drawing.Size(290, 20);
+            this.textBoxHostAPI.TabIndex = 19;
+            // 
+            // labelErrorHostAPI
+            // 
+            this.labelErrorHostAPI.AutoSize = true;
+            this.labelErrorHostAPI.ForeColor = System.Drawing.Color.Red;
+            this.labelErrorHostAPI.Location = new System.Drawing.Point(90, 397);
+            this.labelErrorHostAPI.Name = "labelErrorHostAPI";
+            this.labelErrorHostAPI.Size = new System.Drawing.Size(143, 13);
+            this.labelErrorHostAPI.TabIndex = 20;
+            this.labelErrorHostAPI.Text = "Please enter a valid host API";
+            this.labelErrorHostAPI.Visible = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(395, 449);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.dateTimePickerAutoSend);
+            this.ClientSize = new System.Drawing.Size(395, 487);
+            this.Controls.Add(this.labelErrorHostAPI);
+            this.Controls.Add(this.textBoxHostAPI);
+            this.Controls.Add(this.buttonHostAPI);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.richTextBoxLog);
-            this.Controls.Add(this.labelInfoTimeAutoSend);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.dateTimePickerAutoSend);
             this.Controls.Add(this.progressBarLoading);
             this.Controls.Add(this.labelNotiEnterPath);
+            this.Controls.Add(this.labelInfoTimeAutoSend);
             this.Controls.Add(this.labelNotiEnterVenue);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.buttonSendData);
@@ -310,6 +345,9 @@
         private System.Windows.Forms.Label labelInfoTimeAutoSend;
         private System.Windows.Forms.DateTimePicker dateTimePickerAutoSend;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button buttonHostAPI;
+        private System.Windows.Forms.TextBox textBoxHostAPI;
+        private System.Windows.Forms.Label labelErrorHostAPI;
     }
 }
 

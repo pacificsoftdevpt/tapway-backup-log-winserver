@@ -18,7 +18,7 @@ namespace BackupSaleFromLog
     {
         private const string defaultValueFileName = "dataDefaultValue.txt";
         private const int maxLineLog = 500;
-        private const string API_URL = "http://tapway.elasticbeanstalk.com/receiver/sales/receive?access_token=5d1d8c0be2c4476fb3b347d2b851d950";
+        private const string API_URI = "receiver/sales/receive?access_token=5d1d8c0be2c4476fb3b347d2b851d950";
 
         private bool enableClose = false;
         private bool isDaily = false;
@@ -33,7 +33,7 @@ namespace BackupSaleFromLog
         {
             if (!File.Exists(defaultValueFileName))
             {
-                File.WriteAllText(defaultValueFileName, @"C:\epos\History\,,0:0");
+                File.WriteAllText(defaultValueFileName, @"C:\epos\History\,,0:0,http://data.gotapway.com/");
             }
 
             string readText = File.ReadAllText(defaultValueFileName);
@@ -54,6 +54,19 @@ namespace BackupSaleFromLog
                 labelNotiEnterVenue.Visible = true;
             }
 
+            if (arrDefaultValue.Length < 4)
+            {
+                textBoxHostAPI.Text = "http://data.gotapway.com/";
+            }
+            else
+            {
+                textBoxHostAPI.Text = arrDefaultValue[3];
+                if (textBoxHostAPI.Text == "")
+                {
+                    labelErrorHostAPI.Visible = true;
+                }
+            }
+
             setEnableForSendButton();
 
             SetUpTimer(new TimeSpan(9, 57, 00));
@@ -62,7 +75,7 @@ namespace BackupSaleFromLog
         // PROCESS FUNCTION
         private void setEnableForSendButton()
         {
-            if (txtPath.Text != "" && txtVenueID.Text != "")
+            if (txtPath.Text != "" && txtVenueID.Text != "" && textBoxHostAPI.Text != "")
             {
                 buttonSendData.Enabled = true;
             }
@@ -96,6 +109,18 @@ namespace BackupSaleFromLog
             }
         }
 
+        private void setVisibleForHostAPI()
+        {
+            if (textBoxHostAPI.Text == "")
+            {
+                labelErrorHostAPI.Visible = true;
+            }
+            else
+            {
+                labelErrorHostAPI.Visible = false;
+            }
+        }
+
         private void appendRichTextBox(string text, Color color)
         {
             this.richTextBoxLog.Invoke((MethodInvoker)delegate
@@ -126,7 +151,7 @@ namespace BackupSaleFromLog
                 try
                 {
                     appendRichTextBox("Start upload data", Color.Black);
-                    var response = client.UploadValues(API_URL, postData);
+                    var response = client.UploadValues(textBoxHostAPI.Text + API_URI, postData);
                     var responseText = Encoding.Default.GetString(response);
 
                     if (responseText.IndexOf("\"status\": \"ok\"") >= 0)
@@ -373,6 +398,24 @@ namespace BackupSaleFromLog
         {
             labelInfoTimeAutoSend.Text = "The program will auto send data every day at " + Library.formatNumber10(dateTimePickerAutoSend.Value.Hour) + ':' + Library.formatNumber10(dateTimePickerAutoSend.Value.Minute);
             File.WriteAllText(defaultValueFileName, txtPath.Text + "," + txtVenueID.Text + "," + dateTimePickerAutoSend.Value.Hour + ":" + dateTimePickerAutoSend.Value.Minute);
+        }
+
+        private void buttonHostAPI_Click(object sender, EventArgs e)
+        {
+            if (textBoxHostAPI.ReadOnly)
+            {
+                textBoxHostAPI.ReadOnly = false;
+                buttonHostAPI.Text = "Save Host";
+            }
+            else
+            {
+                textBoxHostAPI.ReadOnly = true;
+                buttonHostAPI.Text = "Host API";
+                File.WriteAllText(defaultValueFileName, txtPath.Text + "," + txtVenueID.Text + "," + dateTimePickerAutoSend.Value.Hour + ":" + dateTimePickerAutoSend.Value.Minute + ',' + textBoxHostAPI.Text);
+            }
+
+            setVisibleForHostAPI();
+            setEnableForSendButton();
         }
     }
 }
